@@ -1,0 +1,30 @@
+<!-- expense_edit.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Expense</title>
+</head>
+<body>
+    <h1>Edit Expense</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{{ expense.date }}" required><br>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount" value="{{ expense.amount }}" required><br>
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == expense.category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>{{ expense.description }}</textarea><br>
+        <input type="submit" value="Update Expense">
+    </form>
+    <p><a href="{% url 'expense_list' %}">Back to Expense List</a></p>
+</body>
+</html>

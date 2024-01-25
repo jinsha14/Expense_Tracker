@@ -1,0 +1,22 @@
+<!-- expense_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense List</title>
+</head>
+<body>
+    <h1>Expense List</h1>
+    <ul>
+        {% for expense in expenses %}
+            <li>{{ expense.date }} - {{ expense.amount }} - {{ expense.category }} - {{ expense.description }}
+                [<a href="{% url 'expense_edit' expense.id %}">Edit</a>]
+                [<a href="{% url 'expense_delete' expense.id %}">Delete</a>]
+            </li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'expense_add' %}">Add New Expense</a></p>
+</body>
+</html>

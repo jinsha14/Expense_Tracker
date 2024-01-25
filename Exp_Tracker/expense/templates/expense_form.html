@@ -1,0 +1,30 @@
+<!-- expense_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Form</title>
+</head>
+<body>
+    <h1>{% if expense %}Edit Expense{% else %}Add New Expense{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{% if expense %}{{ expense.date }}{% endif %}" required><br>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount" value="{% if expense %}{{ expense.amount }}{% endif %}" required><br>
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if expense and category.id == expense.category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>{% if expense %}{{ expense.description }}{% endif %}</textarea><br>
+        <input type="submit" value="{% if expense %}Update{% else %}Add{% endif %} Expense">
+    </form>
+    <p><a href="{% url 'expense_list' %}">Back to Expense List</a></p>
+</body>
+</html>
